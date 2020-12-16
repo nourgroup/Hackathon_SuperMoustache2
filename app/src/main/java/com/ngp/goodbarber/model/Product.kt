@@ -1,4 +1,4 @@
 package com.ngp.goodbarber.model
 
-data class Product(var prix : Number,var nom : String, var devise : String)  {
+data class Product(var prix : String,var nom : String, var Concurrent : String)  {
 }

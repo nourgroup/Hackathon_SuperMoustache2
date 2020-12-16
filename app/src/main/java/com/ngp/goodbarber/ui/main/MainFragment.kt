@@ -30,6 +30,7 @@ class MainFragment : Fragment() {
     var doc2 : Document? = null
     var slot1:Elements? = null
     var slot2 : Elements? = null
+    var slot3 : Elements? = null
 
 
     companion object {
@@ -69,25 +70,24 @@ class MainFragment : Fragment() {
 
     }
 
-    private inner class HtmlText : AsyncTask<URL, Int, String>() {
-        override fun doInBackground(vararg urls: URL): String {
+    private inner class HtmlText : AsyncTask<URL, Int, ArrayList<Product>>() {
+        override fun doInBackground(vararg urls: URL): ArrayList<Product> {
+            val arrayList = ArrayList<Product>()//Creating an empty arraylist.
 
-            var name : String? = "test"
-            var indice : Int = -1
-            var nombreResultat : Int = 0
             /** */
             try {
                 doc2 = Jsoup.connect("https://www.google.com/search?sa=X&authuser=0&biw=1280&bih=619&tbm=shop&sxsrf=ALeKk03u0qZW0qBRsgCBmyWS9eAO32QGhg%3A1607811319602&psb=1&q=air+force&oq=air+force&gs_lcp=Cgtwcm9kdWN0cy1jYxADMgQIIxAnMgQIIxAnMgIIADICCAAyAggAMgIIADICCAAyAggAMgIIADICCAA6BQgAEMADOgoIABCxAxCDARBDOgQIABBDOggIABCxAxCDAToKCAAQsQMQgwEQCkoFCDYSATFQxb0CWN_MAmDb0AJoAHAAeACAAb4BiAHcCZIBAzQuN5gBAKABAaoBD3Byb2R1Y3RzLWNjLXdpesABAQ&sclient=products-cc").get()
                 //name = doc2!!.select("div > div > div > div:nth-child(1) > a > div > div > div > span").text()
-                slot1 = doc2!!.select("div > div > div > div")
-                name = slot1!!.eachText().toString()
-                /*for(i in 1..(slot1!!.size)){
-                    //name = slot1!!.get(i).select("a").text();
-                    //.sh-np__product-title.translate-content
-                    //https://www.tutorialspoint.com/jsoup/jsoup_use_selector.htm
-                    nombreResultat++
-                    name = nombreResultat.toString()
-                }*/
+                //div[data-hveid]
+
+                slot1 = doc2!!.select("div[data-merchant-id]")
+                slot2 = doc2!!.select("div[data-merchant-id] + div > span")
+                slot3 = doc2!!.select("div[data-merchant-id] ~ div[data-merchant-id] > span")
+
+                //name = slot1!!.eachText().toString()
+                for(i in 0..(slot1!!.size-1)){
+                    arrayList.add(Product(slot2!![i].text().toString(),slot1!![i].text().toString(),slot3!![i].text().toString()))
+                }
 
                 /*if(name.contains("air")){
                     indice = name.indexOf("air force")
@@ -96,15 +96,16 @@ class MainFragment : Fragment() {
             } catch (s: Exception) {
             }
 
-            return name!!
+            return arrayList!!
         }
 
-        override fun onPostExecute(result: String) {
-            //Toast.makeText(context, result, Toast.LENGTH_LONG).show()
-            var e = "";
-            for( a in parse(result,"€",10))
-                e+="("+a+")"
-            message.text = e
+        override fun onPostExecute(result:  ArrayList<Product>) {
+            var name : String = ""
+            for(i in 0..(result.size-1)){
+                name = name+ "nom:"+result[i].nom + ":prix:" + result[i].prix + ":concur:" + result[i].Concurrent +"\n"
+            }
+            message.text = name
+
         }
     }
     fun isOnline(): Boolean {
@@ -113,16 +114,5 @@ class MainFragment : Fragment() {
         return netInfo != null && netInfo.isConnectedOrConnecting
     }
 
-    fun parse(code : String, delimiteur : String, nombreCaractere : Int): ArrayList<String>{
-        val arrayList = ArrayList<String>()//Creating an empty arraylist.
-        var tab = code.split(" ")
-        for(i in 0..(tab.size-1)){
-            if(tab[i].equals(delimiteur)){
-                arrayList.add(tab[i-2]+"-"+tab[i-1]+"-"+tab[i])
-            }
-        }
-
-        return arrayList;
-    }
 
 }
