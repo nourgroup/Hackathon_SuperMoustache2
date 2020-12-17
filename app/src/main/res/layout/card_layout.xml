@@ -28,13 +28,19 @@
         android:id="@+id/itemconcurrent"
         android:textStyle="bold"
         android:textColor="@android:color/black"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/itemreference"
+        android:text="test"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"/>
     <Button
         android:id="@+id/itemproduit"
         android:layout_gravity="right"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/texte"
-        android:padding="1dp"
         android:textColor="@android:color/white"
         android:text="Ajouter"/>
 </LinearLayout>

@@ -54,7 +54,7 @@ class MainFragment : Fragment() {
             startActivity(intent)
         }
         if(!isOnline()) {
-            Toast.makeText(this.context!!, "tu n'es pas connecté", Toast.LENGTH_LONG).show()
+            Toast.makeText(this.context!!, "Tu n'es pas connecté", Toast.LENGTH_LONG).show()
         }
     }
 

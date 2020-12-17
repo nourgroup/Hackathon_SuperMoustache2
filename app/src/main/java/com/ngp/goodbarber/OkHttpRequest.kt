@@ -1,4 +1,4 @@
-package com.nourgroup.lboun.MainFactures
+package com.ngp.goodbarber
 
 import java.util.HashMap
 
@@ -10,6 +10,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody
 import java.util.Map
+//https://medium.com/@rohan.s.jahagirdar/android-http-requests-in-kotlin-with-okhttp-5525f879b9e5
 
 class OkHttpRequest(client: OkHttpClient) {
     internal var client = OkHttpClient()
