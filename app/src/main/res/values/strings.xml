@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GoodBarber</string>
+    <string name="title_activity_display_result">DisplayResult</string>
 </resources>
