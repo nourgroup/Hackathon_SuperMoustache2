@@ -16,23 +16,26 @@ import com.ngp.goodbarber.model.Product
 
 
 import kotlinx.android.synthetic.main.activity_display_result.*
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.OkHttpClient
+import okhttp3.Response
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.select.Elements
+import java.io.IOException
 
-class DisplayResult : AppCompatActivity() {
+class DisplayTrackedProduct : AppCompatActivity() {
     private lateinit var recycler_view : RecyclerView
     private lateinit var tv : TextView
     private var layoutManager: RecyclerView.LayoutManager? = null
-    lateinit var adapter: RecyclerAdapter
+    lateinit var adapter: RecyclerAdapterTracked
 
     private lateinit var dialog : mDialogFragment
 
-    var doc : Document? = null
-    var doc2 : Document? = null
-    var slot1: Elements? = null
-    var slot2 : Elements? = null
-    var slot3 : Elements? = null
     lateinit var fm: FragmentManager
 
     var product = ""
@@ -44,45 +47,49 @@ class DisplayResult : AppCompatActivity() {
         my_recycler_view.layoutManager = layoutManager
 
         fm = supportFragmentManager
-        product = intent.getStringExtra("nomProduit")
-        //titre.text = intent.getStringExtra("nomProduit")
+        //product = intent.getStringExtra("nomProduit")
         dialog = mDialogFragment()
         dialog.show(fm, "mDialogFragment")
-        HtmlText().execute()
+        SelectData()
     }
 
-    private inner class HtmlText : AsyncTask<String, Int, ArrayList<Product>>() {
-        override fun doInBackground(vararg urls: String): ArrayList<Product> {
-            val arrayList = ArrayList<Product>()//Creating an empty arraylist.
+/**************************************/
+fun SelectData() {
+    var client = OkHttpClient()
+    var request= OkHttpRequest(client)
+    val url = "https://www.ng-plus.com/pandroid/hackathon/getproducts.php"
+    var array_product : ArrayList<Product> = ArrayList()
+    //val url = "http://api.plos.org/search?q=title:%22Drosophila%22%20and%20body:%22RNA%22&fl=id,abstract&wt=json&indent=on"
+    request.GET(url, object: Callback {
+        override fun onResponse(call: Call?, response: Response) {
+            val responseData = response.body()?.string()
+            runOnUiThread{
+                try {
+                    var response : String
+                    var json = JSONArray(responseData)
+                    lateinit var mJSONObject : JSONObject
 
-            try {
-                doc2 = Jsoup.connect("https://www.google.com/search?sa=X&authuser=0&biw=1280&bih=619&tbm=shop&q="+product).get()
+                    //mJSONObject = json.getJSONObject(0)
+                    //array_product!!.add(Product(mJSONObject.getString("response"),mJSONObject.getString("response"),mJSONObject.getString("response"),mJSONObject.getString("response"),mJSONObject.getString("response"),mJSONObject.getString("response")))
 
-                slot1 = doc2!!.select("div[data-docid]")
+                    for(j in 0..(json.length()-1)){
+                        mJSONObject = json.getJSONObject(j);
+                        array_product?.add(Product(mJSONObject.getString("id_product"),mJSONObject.getString("price"),mJSONObject.getString("id_product_google"),mJSONObject.getString("reference"),mJSONObject.getString("date_creation"),mJSONObject.getString("date_update")))
+                    }
 
-                //name = slot1!!.eachText().toString()
-                for(i in 0..(slot1!!.size-1)){
-                    arrayList.add(Product(slot1!![i].select("a > h1,h2,h3,h4,h5,h6").text().toString(),slot1!![i].select("span > span[aria-hidden]").text().toString(),slot1!![i].select("*:last-child a[target=_blank]").text().toString(),"","",""))
-                    /*recuperer à chaque le gtin qui est l'identifiant produit*/
-                    doc = Jsoup.connect("https://www.google.com/"+slot1!![i].select("a").attr("href").toString()).get()
-                    /*TODO prendre soit les references soit gtin soit */
-                    slot2 = doc!!.select("table > tbody:nth-child(1) > tr:nth-child(4) > td:nth-child(2)")
-                    //tbody:nth-child(1) > tr:nth-child(4) > td:nth-child(2)
-                    //slot2 = doc!!.select("table > tbody > tr > td:nth-child(2)")
-                    arrayList[i].gtin = slot2!!.text()
+                } catch (e: JSONException) {
+                    e.printStackTrace()
                 }
 
-            } catch (s: Exception) {
+                adapter = RecyclerAdapterTracked(array_product,this@DisplayTrackedProduct)
+                my_recycler_view.adapter = adapter
+                dialog.close()
             }
-
-            return arrayList!!
         }
 
-        override fun onPostExecute(result:  ArrayList<Product>) {
-            adapter = RecyclerAdapter(result,this@DisplayResult)
-            my_recycler_view.adapter = adapter
-            dialog.close()
-            titre.text = "nombre de résultat : " + result.size.toString()
+        override fun onFailure(call: Call?, e: IOException?) {
+            println("Activity Failure.")
         }
-    }
+    })
+}
 }

@@ -25,6 +25,14 @@
             android:name=".DisplayResult"
             android:label="@string/title_activity_display_result"
             android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name=".DisplayTrackedProduct"
+            android:label="@string/title_activity_display_result"
+            android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name=".DisplayTrackedPrice"
+            android:label="@string/title_activity_display_result"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

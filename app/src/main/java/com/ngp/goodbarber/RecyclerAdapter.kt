@@ -51,41 +51,39 @@ class RecyclerAdapter(var arrayProduct : MutableList<Product>? , var activity : 
         viewHolder.itemPrix.text = arrayProduct!!.get(i).prix
         viewHolder.itemConcurrent.text = arrayProduct!!.get(i).Concurrent
         viewHolder.itemproduit.setOnClickListener {
-            Toast.makeText(activity,"clicked",Toast.LENGTH_SHORT).show()
-            InsertData(arrayProduct)
+
+            InsertData(arrayProduct!![i])
         }
-        viewHolder.itemreference.text =  arrayProduct!!.get(i).gtin
+        viewHolder.itemreference.text =  arrayProduct!!.get(i).reference
     }
     override fun getItemCount(): Int {
         return arrayProduct!!.size
     }
 
     /**/
-    fun InsertData(arrayProduct: MutableList<Product>?) {
+    fun InsertData(product: Product?) {
         var client = OkHttpClient()
         var request= OkHttpRequest(client)
-        //val url = "https://www.ng-plus.com/pandroid/LBOUN/operations_produits.php?ID_VENDEUR="+ Compte.vendeur.id+"&prix="+prix+"&quantite="+quantite+"&n_produit="+n_produit+""
-        val url = "https://localhost.com"
+        val url = "https://www.ng-plus.com/pandroid/hackathon/addproduct.php?id_product_google="+ product!!.reference +"&price="+product!!.prix.split(" ")[0]+"&id_product="+product.nom+"&reference="+product.gtin
+
         //val url = "http://api.plos.org/search?q=title:%22Drosophila%22%20and%20body:%22RNA%22&fl=id,abstract&wt=json&indent=on"
         request.GET(url, object: Callback {
             override fun onResponse(call: Call?, response: Response) {
-                val responseData = response.body()?.string()
+                //val responseData = response.body()?.string()
                 activity?.runOnUiThread{
                     try {
-                        var response : String
+                        /*var response : String
                         var json = JSONArray(responseData)
                         lateinit var mJSONObject : JSONObject
 
                         mJSONObject = json.getJSONObject(0)
                         response = mJSONObject.getString("response")
                         if(response.equals("OK")){
-                            /*TODO interface*/
-                            //mOnChangedData.ChangedData(n_produit,fprix as Double,fquantite as Int)
-                            //mOnChangedData.ChangedData(n_produit,fprix.toDouble(),fquantite.toInt());
 
-                        }
+                        }*/
 
-                        //Log.i("OKKO",response+":"+n_produit+":"+fprix+":"+fquantite)
+                        Toast.makeText(activity,"Produit Ajouté !",Toast.LENGTH_SHORT).show()
+
                     } catch (e: JSONException) {
                         e.printStackTrace()
 

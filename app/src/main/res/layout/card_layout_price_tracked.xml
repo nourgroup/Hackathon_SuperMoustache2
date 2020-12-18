@@ -31,15 +31,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/itemreference"
-        android:text="test"
         android:textStyle="bold"
-        android:textColor="@android:color/black"/>
-    <Button
-        android:id="@+id/itemproduit"
-        android:layout_gravity="right"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/texte"
+        android:gravity="center"
         android:textColor="@android:color/white"
-        android:text="voir les prix trackés"/>
+        android:background="@drawable/texte"/>
+
 </LinearLayout>

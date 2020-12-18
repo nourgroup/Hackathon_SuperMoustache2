@@ -14,6 +14,7 @@ import android.net.ConnectivityManager
 import android.os.AsyncTask
 import android.widget.Toast
 import com.ngp.goodbarber.DisplayResult
+import com.ngp.goodbarber.DisplayTrackedProduct
 import com.ngp.goodbarber.model.Product
 import kotlinx.android.synthetic.main.main_fragment.*
 import org.jsoup.Jsoup
@@ -52,6 +53,12 @@ class MainFragment : Fragment() {
             // start your next activity
             //intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
+        }
+        button3.setOnClickListener {
+            //message.text = name
+            val intent1 = Intent(this@MainFragment.context, DisplayTrackedProduct::class.java)
+            //intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+            startActivity(intent1)
         }
         if(!isOnline()) {
             Toast.makeText(this.context!!, "Tu n'es pas connecté", Toast.LENGTH_LONG).show()
