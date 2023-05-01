@@ -1,4 +1,4 @@
-package com.ngp.goodbarber.ui.main
+package com.ngp.goodbarber.viewmodel
 
 import androidx.lifecycle.ViewModel
 

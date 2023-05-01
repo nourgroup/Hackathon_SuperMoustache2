@@ -1,18 +1,16 @@
-package com.ngp.goodbarber
+package com.ngp.goodbarber.ui.main
 
-import android.app.Activity
-import android.content.Intent
-import android.os.AsyncTask
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
-
 import androidx.fragment.app.FragmentManager
-import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.widget.TextView
+import android.widget.Toast
+import com.ngp.goodbarber.R
+import com.ngp.goodbarber.mDialogFragment
 import com.ngp.goodbarber.model.Product
+import com.ngp.goodbarber.services.OkHttpRequest
 import kotlinx.android.synthetic.main.activity_display_result.*
 import okhttp3.Call
 import okhttp3.Callback
@@ -21,22 +19,20 @@ import okhttp3.Response
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
-import org.jsoup.select.Elements
 import java.io.IOException
 
-class DisplayTrackedProduct : AppCompatActivity() {
+class DisplayTrackedPrice : AppCompatActivity() {
     private lateinit var recycler_view : RecyclerView
     private lateinit var tv : TextView
     private var layoutManager: RecyclerView.LayoutManager? = null
-    lateinit var adapter: RecyclerAdapterTracked
+    lateinit var adapter: RecyclerAdapterPriceTracked
 
     private lateinit var dialog : mDialogFragment
 
     lateinit var fm: FragmentManager
 
     var product = ""
+    var reference = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_display_result)
@@ -45,17 +41,20 @@ class DisplayTrackedProduct : AppCompatActivity() {
         my_recycler_view.layoutManager = layoutManager
 
         fm = supportFragmentManager
-        //product = intent.getStringExtra("nomProduit")
+        product = intent.getStringExtra("nom")!!
+        reference = intent.getStringExtra("reference")!!
+        Toast.makeText(this@DisplayTrackedPrice,reference+",",Toast.LENGTH_LONG).show()
         dialog = mDialogFragment()
         dialog.show(fm, "mDialogFragment")
-        SelectData()
+        SelectData(product,reference)
     }
 
 /**************************************/
-fun SelectData() {
+fun SelectData(product : String,reference : String) {
     var client = OkHttpClient()
     var request= OkHttpRequest(client)
-    val url = "https://www.ng-plus.com/pandroid/hackathon/getproducts.php"
+    val url = "https://www.ng-plus.com/pandroid/hackathon/gettrackedproducts.php?id_product="+product+"&reference="+reference
+
     var array_product : ArrayList<Product> = ArrayList()
     //val url = "http://api.plos.org/search?q=title:%22Drosophila%22%20and%20body:%22RNA%22&fl=id,abstract&wt=json&indent=on"
     request.GET(url, object: Callback {
@@ -79,7 +78,7 @@ fun SelectData() {
                     e.printStackTrace()
                 }
 
-                adapter = RecyclerAdapterTracked(array_product,this@DisplayTrackedProduct)
+                adapter = RecyclerAdapterPriceTracked(array_product,this@DisplayTrackedPrice)
                 my_recycler_view.adapter = adapter
                 dialog.close()
             }

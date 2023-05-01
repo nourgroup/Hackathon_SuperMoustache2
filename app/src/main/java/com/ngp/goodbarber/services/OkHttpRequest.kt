@@ -1,4 +1,4 @@
-package com.ngp.goodbarber
+package com.ngp.goodbarber.services
 
 import java.util.HashMap
 

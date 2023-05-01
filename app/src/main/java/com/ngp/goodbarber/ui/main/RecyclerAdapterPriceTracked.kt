@@ -1,26 +1,13 @@
-package com.ngp.goodbarber
+package com.ngp.goodbarber.ui.main
 
 import android.app.Activity
-import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.ngp.goodbarber.R
 import com.ngp.goodbarber.model.Product
-import kotlinx.android.synthetic.main.main_fragment.*
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.OkHttpClient
-import okhttp3.Response
-import org.json.JSONArray
-import org.json.JSONException
-import org.json.JSONObject
-import java.io.IOException
 
 //import kotlinx.android.synthetic.main.card_layout.*
 

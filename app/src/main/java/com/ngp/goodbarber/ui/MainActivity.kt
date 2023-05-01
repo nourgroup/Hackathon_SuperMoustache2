@@ -1,7 +1,8 @@
-package com.ngp.goodbarber
+package com.ngp.goodbarber.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.ngp.goodbarber.R
 import com.ngp.goodbarber.ui.main.MainFragment
 
 class MainActivity : AppCompatActivity() {

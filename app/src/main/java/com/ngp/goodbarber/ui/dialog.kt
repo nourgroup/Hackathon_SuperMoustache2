@@ -10,10 +10,6 @@ import android.view.Window
 import android.widget.Button
 import androidx.fragment.app.DialogFragment
 
-
-/**
- * Created by HP on 20/02/2016.
- */
 class mDialogFragment : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

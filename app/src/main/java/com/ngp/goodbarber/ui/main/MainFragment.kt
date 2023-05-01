@@ -1,6 +1,5 @@
 package com.ngp.goodbarber.ui.main
 
-import android.app.PendingIntent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,16 +9,10 @@ import com.ngp.goodbarber.R
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
-import android.os.AsyncTask
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
-import com.ngp.goodbarber.DisplayResult
-import com.ngp.goodbarber.DisplayTrackedProduct
-import com.ngp.goodbarber.model.Product
+import com.ngp.goodbarber.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.main_fragment.*
-import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
-import org.jsoup.select.Elements
 
 
 class MainFragment : Fragment() {
