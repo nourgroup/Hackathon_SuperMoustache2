@@ -4,17 +4,14 @@ import android.app.Activity
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.app.FragmentManager
-import android.support.v7.app.AppCompatActivity;
-
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
+import androidx.fragment.app.FragmentManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.widget.TextView
 import android.widget.Toast
 import com.ngp.goodbarber.model.Product
-
-
 import kotlinx.android.synthetic.main.activity_display_result.*
 import okhttp3.Call
 import okhttp3.Callback
@@ -48,8 +45,8 @@ class DisplayTrackedPrice : AppCompatActivity() {
         my_recycler_view.layoutManager = layoutManager
 
         fm = supportFragmentManager
-        product = intent.getStringExtra("nom")
-        reference = intent.getStringExtra("reference")
+        product = intent.getStringExtra("nom")!!
+        reference = intent.getStringExtra("reference")!!
         Toast.makeText(this@DisplayTrackedPrice,reference+",",Toast.LENGTH_LONG).show()
         dialog = mDialogFragment()
         dialog.show(fm, "mDialogFragment")

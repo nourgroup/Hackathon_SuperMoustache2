@@ -3,12 +3,12 @@ package com.ngp.goodbarber
 
 import android.app.Activity
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
+import androidx.fragment.app.DialogFragment
 
 
 /**
@@ -22,7 +22,7 @@ class mDialogFragment : DialogFragment() {
                 false)
         isCancelable = true
 
-        dialog.window!!.requestFeature(Window.FEATURE_NO_TITLE)
+        dialog?.window!!.requestFeature(Window.FEATURE_NO_TITLE)
 
         return v
     }

@@ -1,9 +1,8 @@
 package com.ngp.goodbarber.ui.main
 
 import android.app.PendingIntent
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +12,7 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import android.os.AsyncTask
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProviders
 import com.ngp.goodbarber.DisplayResult
 import com.ngp.goodbarber.DisplayTrackedProduct
 import com.ngp.goodbarber.model.Product
